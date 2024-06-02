@@ -1,0 +1,97 @@
+{% extends "base/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title_block %}Your Cart{% endblock %}
+
+{% block body_block %}
+<style>
+    /* Custom CSS for form styling */
+    .form-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Adjust height as needed */
+    }
+
+    /* Style for form */
+    .profile-form {
+        max-width: 400px; /* Adjust width as needed */
+        width: 100%;
+    }
+
+    /* Style for form elements */
+    .form-control {
+        margin-bottom: 10px; /* Adjust margin as needed */
+    }
+
+    /* Additional styles */
+    .card-header {
+        background-color: #343a40; /* Dark background color */
+        color: white; /* White text color */
+    }
+
+    .card {
+        margin-top: 50px; /* Adjust margin as needed */
+    }
+
+    .btn-dark {
+        background-color: #343a40; /* Dark button background color */
+        color: white; /* White text color */
+        border: none; /* Remove border */
+    }
+
+    .btn-dark:hover {
+        background-color: #23272b; /* Darken button on hover */
+    }
+
+    .table {
+        color: white; /* White text color */
+    }
+
+    /* Hover effect for table rows */
+    tbody tr:hover {
+        background-color: #495057; /* Dark background color on hover */
+        color: white; /* White text color on hover */
+    }
+
+    /* Style for "Add" link */
+    .add-link {
+        color: white; /* White text color */
+        text-decoration: none; /* Remove underline */
+    }
+
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">CartedItem</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-dark">
+                        <thead>
+                            <tr>
+                                <th scope="col">Product</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in Order_items %}
+                            <tr>
+                                <td>{{ item.product.product_name }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>&#2547 {{ item.product.MRP }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <a href="{% url 'place_order' %}" class="btn btn-dark">Place Order</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

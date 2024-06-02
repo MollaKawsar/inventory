@@ -1,0 +1,110 @@
+{% extends "base/base.html" %}
+
+{% block title_block %}Product Search{% endblock %}
+
+{% block body_block %}
+<style>
+    /* Custom CSS for form styling */
+    .form-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Adjust height as needed */
+    }
+
+    /* Style for form */
+    .profile-form {
+        max-width: 400px; /* Adjust width as needed */
+        width: 100%;
+    }
+
+    /* Style for form elements */
+    .form-control {
+        margin-bottom: 10px; /* Adjust margin as needed */
+    }
+
+    /* Additional styles */
+    .card-header {
+        background-color: #343a40; /* Dark background color */
+        color: white; /* White text color */
+    }
+
+    .card {
+        margin-top: 50px; /* Adjust margin as needed */
+    }
+
+    .btn-dark {
+        background-color: #343a40; /* Dark button background color */
+        color: white; /* White text color */
+        border: none; /* Remove border */
+    }
+
+    .btn-dark:hover {
+        background-color: #23272b; /* Darken button on hover */
+    }
+
+    .table {
+        color: white; /* White text color */
+    }
+
+    /* Hover effect for table rows */
+    tbody tr:hover {
+        background-color: #495057; /* Dark background color on hover */
+        color: white; /* White text color on hover */
+    }
+
+    /* Style for "Add" link */
+    .add-link {
+        color: white; /* White text color */
+        text-decoration: none; /* Remove underline */
+    }
+
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Search Product</h5>
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'search' %}" method="GET">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="search" placeholder="Search by product name" name="q">
+                        </div>
+                        <button type="submit" class="btn btn-dark btn-block mt-3">Search</button>
+                    </form>
+                    <div class="mt-4">
+                        <table class="table table-dark table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Style</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col"></th> <!-- Added Actions column -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for product in products %}
+                                <tr>
+                                    <td>{{ product.product_name }}</td>
+                                    <td>{{ product.Style }}</td>
+                                    <td>${{ product.MRP }}</td>
+                                    <td><a href="{% url 'add_to_cart' product.id %}"<p>Add</p></a></td> <!-- Added link with class -->
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% if not products %}
+                        <div class="alert alert-danger" role="alert"><p>No Products Found</p></div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
